@@ -6,13 +6,13 @@ namespace Tests\Unit\Models;
 
 use App\Models\Bill;
 use App\Models\Card;
-use App\Models\FinancialOrganization;
+use App\Models\Bank;
 use Tests\TestCase;
 
 class RelationTest extends TestCase
 {
     /**
-     * @var FinancialOrganization
+     * @var Bank
      */
     protected $bank;
 
@@ -34,7 +34,7 @@ class RelationTest extends TestCase
 
     protected function createModels()
     {
-        $this->bank = \App\Models\FinancialOrganization::create([
+        $this->bank = \App\Models\Bank::create([
             'name' => '支付宝',
             'logo' => 'zhifubao.logo.png'
         ]);

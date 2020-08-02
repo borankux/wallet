@@ -11,7 +11,7 @@ class SampleSeed extends Seeder
      */
     public function run()
     {
-        $bank = \App\Models\FinancialOrganization::create([
+        $bank = \App\Models\Bank::create([
             'name' => '支付宝',
             'logo' => 'zhifubao.logo.png'
         ]);
@@ -28,6 +28,7 @@ class SampleSeed extends Seeder
         $bill = \App\Models\Bill::create([
             'card_id' => $card->id,
             'is_staged' => true,
+            'org_id' => $bank->id,
             'total_stage' => 12,
             'current_stage' => 7,
             'full_fee_per_stage'=>42.86,

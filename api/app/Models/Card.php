@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $consume_balance
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\FinancialOrganization|null $bank
+ * @property-read \App\Models\Bank|null $bank
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Bill[] $bills
  * @property-read int|null $bills_count
  * @property float $real_balance
@@ -67,7 +67,7 @@ class Card extends Model
 
     public function bank()
     {
-        return $this->belongsTo(FinancialOrganization::class, 'org_id', 'id');
+        return $this->belongsTo(Bank::class, 'org_id', 'id');
     }
 
     public function bills()

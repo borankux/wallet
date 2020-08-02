@@ -35,7 +35,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $org_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereOrgId($value)
  * @mixin \Eloquent
- * @property-read \App\Models\FinancialOrganization|null $bank
+ * @property-read \App\Models\Bank|null $bank
  */
 class Bill extends Model
 {
@@ -59,6 +59,14 @@ class Bill extends Model
 
     public function bank()
     {
-        return $this->belongsTo(FinancialOrganization::class, 'org_id', 'id');
+        return $this->belongsTo(Bank::class, 'org_id', 'id');
+    }
+
+    /**
+     * @return float|int
+     */
+    public function getMaxRemainingDebt()
+    {
+        return ($this->total_stage - $this->current_stage) * $this->full_fee_per_stage;
     }
 }
