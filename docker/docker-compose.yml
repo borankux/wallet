@@ -1,0 +1,27 @@
+version: "3.6"
+services:
+  nginx:
+    depends_on:
+      - php
+    image: nginx:alpine
+    networks:
+      - front
+  php:
+    image: php:aplpine
+    networks:
+      - front
+
+  api:
+    build: ../api
+    networks:
+      - front
+
+  web:
+    build: ../web
+    networks:
+      - front
+
+
+networks:
+  front:
+  back:
