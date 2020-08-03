@@ -25,6 +25,11 @@ class BankService extends BaseService
         return $cash + $consume + $real;
     }
 
+
+    /**
+     * @param Bank $bank
+     * @return mixed
+     */
     public function getMaxDebt(Bank $bank)
     {
         return $bank->bills->sum(function (Bill $bill) {
@@ -51,21 +56,75 @@ class BankService extends BaseService
          });
     }
 
+
+    /**
+     * @param Bank $bank
+     * @return int
+     */
     public function getTillNextPayDay(Bank $bank)
     {
-        $payday = $bank->cards->first()->payday;
+        $payday = $bank->cards()->min('payday');
+        if(!$payday) {
+            return 0;
+        }
         $paydayThisMonth = Carbon::today()->setDay($payday);
         $isOverDue = Carbon::today()->diffInDays($paydayThisMonth, false) < 0;
         return $isOverDue ? Carbon::today()->diffInDays(Carbon::today()->setDay($payday)->addMonth()): Carbon::today()->diffInDays(Carbon::today()->setDay($payday));
     }
 
+
+    /**
+     * @param Bank $bank
+     * @return float
+     */
     public function getTotalDebtsThisMonth(Bank $bank)
     {
         return  (float)$bank->bills()->sum('full_fee_per_stage');
     }
 
+
+    /**
+     * @param Bank $bank
+     * @return float
+     */
     public function getRemainingDebtsThisMonth(Bank $bank)
     {
         return (float)$bank->bills()->where('status', Constants::$BILL_STATUS_DEFAULT)->sum('full_fee_per_stage');
     }
+
+
+    /**
+     * @param array $params
+     * @return Bank|\Illuminate\Database\Eloquent\Model
+     */
+    public function addBank($params = [])
+    {
+        return Bank::create($params);
+    }
+
+
+    /**
+     * @param $bankId
+     * @return bool|null
+     */
+    public function deleteBank($bankId)
+    {
+        try {
+            return Bank::findOrFail($bankId)->delete();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+
+    /**
+     * @param $bankId
+     * @param array $params
+     * @return bool
+     */
+    public function updateBank($bankId, $params = [])
+    {
+        return Bank::findOrFail($bankId)->update($params);
+    }
+
 }
