@@ -36,6 +36,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereOrgId($value)
  * @mixin \Eloquent
  * @property-read \App\Models\Bank|null $bank
+ * @property int $status
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereStatus($value)
  */
 class Bill extends Model
 {

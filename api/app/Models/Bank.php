@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read int|null $bills_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Card[] $cards
  * @property-read int|null $cards_count
- * @property  array $meta;
+ * @property array $meta;
  */
 class Bank extends Model
 {

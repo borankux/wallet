@@ -1,5 +1,6 @@
 <?php
 
+use App\DTO\Constants;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,6 +24,7 @@ class CreateBillsTable extends Migration
             $table->decimal('full_fee_per_stage', 10, 2)->nullable();
             $table->decimal('minimal_fee_per_stage', 10, 2)->nullable();
             $table->smallInteger('payday')->nullable();
+            $table->smallInteger('status')->default(Constants::$BILL_STATUS_DEFAULT);
             $table->timestamps();
         });
     }

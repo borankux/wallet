@@ -4,9 +4,12 @@
 namespace App\Services;
 
 
+use App\DTO\Constants;
 use App\Models\Bank;
 use App\Models\Bill;
+use App\Models\Card;
 use Carbon\Carbon;
+use Cassandra\Map;
 
 class BankService extends BaseService
 {
@@ -37,8 +40,12 @@ class BankService extends BaseService
          return Bank::all()->map(function (Bank $bank) {
              $bank->meta = [
                  'max_usable_money' => $this->getMaxUsableMoney($bank),
-                 'max_debt' => $this->getMaxDebt($bank),
                  'next_payday' => $this->getTillNextPayDay($bank),
+                 'debt' => [
+                     'month_remaining' => $this->getRemainingDebtsThisMonth($bank),
+                     'month_total' => $this->getTotalDebtsThisMonth($bank),
+                     'total' => $this->getMaxDebt($bank),
+                 ]
              ];
              return $bank;
          });
@@ -50,5 +57,15 @@ class BankService extends BaseService
         $paydayThisMonth = Carbon::today()->setDay($payday);
         $isOverDue = Carbon::today()->diffInDays($paydayThisMonth, false) < 0;
         return $isOverDue ? Carbon::today()->diffInDays(Carbon::today()->setDay($payday)->addMonth()): Carbon::today()->diffInDays(Carbon::today()->setDay($payday));
+    }
+
+    public function getTotalDebtsThisMonth(Bank $bank)
+    {
+        return  (float)$bank->bills()->sum('full_fee_per_stage');
+    }
+
+    public function getRemainingDebtsThisMonth(Bank $bank)
+    {
+        return (float)$bank->bills()->where('status', Constants::$BILL_STATUS_DEFAULT)->sum('full_fee_per_stage');
     }
 }
