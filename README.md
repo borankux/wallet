@@ -1,1 +1,1 @@
-![API](https://github.com/borankux/wallet/workflows/Laravel/badge.svg)
+![API](https://github.com/borankux/wallet/workflows/API/badge.svg)
