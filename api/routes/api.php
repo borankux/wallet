@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +12,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::get('/banks', 'BankController@getBanks');
+Route::post('/bank', 'BankController@addBank');
+Route::delete('/bank/{bankId}', 'BankController@deleteBank');
+Route::put('/bank/{bankId}', 'BankController@updateBank');
+
+Route::get('/cards', 'CardController@getCards');
+Route::post('/card/{bankId}', 'CardController@addCard');
+Route::delete('/card/{cardId}', 'CardController@deleteCard');
+Route::put('/card/{cardId}','CardController@updateCard');
+
+
+Route::post('/bill/{cardId}', 'BillController@addBill');
+Route::delete('/bill/{billId}', 'BillController@deleteBill');
+Route::put('/bill/{billId}', 'BillController@updateBill');
