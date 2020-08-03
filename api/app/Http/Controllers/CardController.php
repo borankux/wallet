@@ -11,22 +11,22 @@ class CardController extends Controller
 {
     public function getCards()
     {
-
+        return $this->cardService->getCards();
     }
 
-    public function addCard(AddCardRequest $request)
+    public function addCard(AddCardRequest $request, $bankId)
     {
-
+        return $this->cardService->addCard($bankId, $request->validated());
     }
 
-    public function updateCard(UpdateCardRequest $request)
+    public function updateCard(UpdateCardRequest $request, $cardId)
     {
-
+        return $this->cardService->updateCard($cardId, $request->validated());
     }
 
-    public function deleteCard(DeleteCardRequest $request)
+    public function deleteCard(DeleteCardRequest $request, $cardId)
     {
-
+        return $this->cardService->deleteCard($cardId);
     }
 
 }

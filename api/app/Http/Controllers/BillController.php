@@ -11,16 +11,16 @@ class BillController extends Controller
 {
     public function addBill(AddBillRequest $request)
     {
-
+        return $this->billService->addBill($request->validated());
     }
 
-    public function updateBill(UpdateBillRequest $request)
+    public function updateBill(UpdateBillRequest $request, $billId)
     {
-
+        return $this->billService->updateBill($billId, $request->validated());
     }
 
-    public function deleteBill(DeleteBillRequest $request)
+    public function deleteBill(DeleteBillRequest $request, $billId)
     {
-
+        return $this->billService->deleteBill($billId);
     }
 }

@@ -112,7 +112,7 @@ class BankService extends BaseService
         try {
             return Bank::findOrFail($bankId)->delete();
         } catch (\Exception $e) {
-            return false;
+            return $e->getMessage();
         }
     }
 
