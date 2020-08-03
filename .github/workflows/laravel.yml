@@ -30,4 +30,4 @@ jobs:
         DB_CONNECTION: sqlite_test
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
-      working-directory: api
+      working-directory: ./api
